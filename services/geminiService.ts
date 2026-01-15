@@ -3,15 +3,35 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { SYSTEM_INSTRUCTION } from "../constants";
 import { TemplateType, EvaluationResponse, EvaluationPeriod } from "../types";
 
+export const verifyApiKey = async (apiKey: string): Promise<boolean> => {
+  if (!apiKey) return false;
+  try {
+    const ai = new GoogleGenAI({ apiKey });
+    // Use the same model as the main function to ensure consistency and validity
+    await ai.models.generateContent({
+      model: "gemini-3-flash-preview", 
+      contents: "Hello",
+    });
+    return true;
+  } catch (error) {
+    console.error("API Verification Failed:", error);
+    return false;
+  }
+};
+
 export const generateComments = async (
   templateType: TemplateType,
   data: any[],
   subjectName: string,
   grade: number,
-  period: EvaluationPeriod
+  period: EvaluationPeriod,
+  apiKey: string
 ): Promise<EvaluationResponse> => {
-  // Always use const ai = new GoogleGenAI({apiKey: process.env.API_KEY});
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  if (!apiKey) {
+    throw new Error("Vui lòng nhập khóa API trước khi thực hiện.");
+  }
+
+  const ai = new GoogleGenAI({ apiKey });
   
   const responseSchema = templateType === TemplateType.DINH_KY ? {
     type: Type.OBJECT,
@@ -84,7 +104,6 @@ export const generateComments = async (
       throw new Error("Không nhận được phản hồi từ AI.");
     }
 
-    // Access the .text property directly as per SDK guidelines.
     return JSON.parse(response.text.trim());
   } catch (error: any) {
     console.error("Gemini API Error:", error);
