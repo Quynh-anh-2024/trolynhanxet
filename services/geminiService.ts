@@ -74,19 +74,33 @@ export const generateComments = async (
   const prompt = `
     BỐI CẢNH QUAN TRỌNG:
     - Khối lớp: ${grade}
-    - Thời điểm: ${period} (Quyết định văn phong: Giữa kì = Tiến bộ/Cố gắng; Cuối kì = Kết quả/Thành thạo)
-    - Loại đánh giá: ${templateType === TemplateType.DINH_KY ? 'Định kỳ môn học' : 'Năng lực Phẩm chất'}
-    - Môn học: ${subjectName}
+    - Thời điểm: ${period}
+    - Loại đánh giá: ${templateType === TemplateType.DINH_KY ? 'ĐỊNH KỲ MÔN HỌC' : 'NĂNG LỰC & PHẨM CHẤT (NLPC)'}
+    - Môn học (nếu có): ${subjectName}
 
-    Dữ liệu học sinh cần nhận xét:
+    Dữ liệu học sinh (bao gồm mức đánh giá T, H/Đ, C):
     ${JSON.stringify(data, null, 2)}
     
-    YÊU CẦU ĐẶC BIỆT (TUÂN THỦ 100%):
-    1. KHÔNG chứa các từ chỉ thời gian như "học kì 1", "cuối năm", "giữa kì".
-    2. KHÔNG bắt đầu bằng "em", "con", "bạn". Bắt đầu ngay bằng động từ/tính từ.
-    3. Nhận xét phải logic với mức đạt (T, H, C) và phù hợp với thời điểm ${period}.
-    
-    Hãy thực hiện nhận xét cho từng học sinh.
+    YÊU CẦU ĐẶC BIỆT CHO ${templateType === TemplateType.NLPC ? 'NLPC (Năng lực Phẩm chất)' : 'MÔN HỌC'}:
+    ${templateType === TemplateType.NLPC 
+      ? `
+        1. PHÂN LOẠI CHẶT CHẼ DỰA TRÊN CỘT 'level':
+           - Mức T (Tốt): Nhận xét phải thể hiện sự nổi bật, tích cực, tự giác cao.
+           - Mức Đ (Đạt) hoặc H (Hoàn thành): Nhận xét thể hiện sự hoàn thành nhiệm vụ, đạt chuẩn, có ý thức.
+           - Mức C (Cần cố gắng): Nhận xét cần chỉ ra điểm cần hỗ trợ, rèn luyện.
+        2. Sinh ra 3 nội dung riêng biệt: Năng lực chung, Năng lực đặc thù, Phẩm chất.
+        3. Tuyệt đối KHÔNG được viết nhận xét mức Tốt cho học sinh mức Đ/C và ngược lại.
+      ` 
+      : `
+        1. Dựa vào mức T, H, C để viết nhận xét môn học.
+        2. Nhận xét ngắn gọn, tập trung vào kiến thức và kỹ năng môn ${subjectName}.
+      `
+    }
+
+    YÊU CẦU CHUNG:
+    - KHÔNG chứa từ chỉ thời gian.
+    - KHÔNG bắt đầu bằng "em", "con", "bạn".
+    - Chuẩn ngữ pháp, văn phong sư phạm tích cực.
   `;
 
   try {

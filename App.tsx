@@ -84,7 +84,9 @@ const App: React.FC = () => {
 
       // 1. Detect Header Row based on keywords
       for (let i = 0; i < Math.min(data.length, 10); i++) {
-        const rowStr = (data[i] || []).map(c => String(c).toLowerCase()).join(' ');
+        const row = data[i] || [];
+        // Safe conversion handling sparse arrays from Excel
+        const rowStr = Array.from(row).map(c => c ? String(c).toLowerCase() : '').join(' ');
         if (rowStr.includes('stt') || rowStr.includes('họ và tên') || rowStr.includes('họ tên')) {
           headerRowIndex = i;
           break;
@@ -93,8 +95,12 @@ const App: React.FC = () => {
 
       if (headerRowIndex !== -1) {
         // Dynamic Mapping
-        const header = (data[headerRowIndex] || []).map(c => String(c).toLowerCase().trim());
-        const getIdx = (keywords: string[]) => header.findIndex(h => keywords.some(k => h.includes(k)));
+        const rawHeader = data[headerRowIndex] || [];
+        // Convert to dense array of strings to avoid undefined errors in sparse arrays
+        const header = Array.from(rawHeader).map(c => c ? String(c).toLowerCase().trim() : '');
+        
+        // Find index with safety check for h (header string) being truthy
+        const getIdx = (keywords: string[]) => header.findIndex(h => h && keywords.some(k => h.includes(k)));
 
         const idxSTT = getIdx(['stt']);
         const idxCode = getIdx(['mã', 'id', 'định danh']);
@@ -260,7 +266,7 @@ const App: React.FC = () => {
   const getLevelColor = (level: string = '') => {
     const l = level.trim().toUpperCase();
     if (l === 'T') return 'bg-emerald-100 text-emerald-700 border-emerald-200 ring-emerald-500';
-    if (l === 'H') return 'bg-blue-100 text-blue-700 border-blue-200 ring-blue-500';
+    if (l === 'H' || l === 'Đ') return 'bg-blue-100 text-blue-700 border-blue-200 ring-blue-500';
     if (l === 'C') return 'bg-orange-100 text-orange-700 border-orange-200 ring-orange-500';
     return 'bg-slate-100 text-slate-600 border-slate-200 ring-slate-400';
   };
@@ -539,36 +545,47 @@ const App: React.FC = () => {
                                     title="Nhập tên lớp"
                                   />
                                 </div>
-                                 {/* Interactive Level and Score selectors for DINH_KY */}
-                                {state.templateType === TemplateType.DINH_KY && (
-                                  <div className="flex gap-2 mt-2">
+                                 {/* Interactive Level and Score selectors */}
+                                 <div className="flex gap-2 mt-2">
                                     {/* Level Selector */}
                                     <div className="relative">
                                       <select
-                                        value={student?.level || 'H'}
+                                        value={student?.level || (state.templateType === TemplateType.NLPC ? 'Đ' : 'H')}
                                         onChange={(e) => student && updateStudent(student.stt, 'level', e.target.value)}
                                         className={`appearance-none px-3 py-1 pr-6 rounded-lg text-[11px] font-bold border uppercase tracking-wider cursor-pointer outline-none focus:ring-2 focus:ring-offset-1 transition-all shadow-sm ${getLevelColor(student?.level)}`}
                                       >
-                                        <option value="T">Mức: T</option>
-                                        <option value="H">Mức: H</option>
-                                        <option value="C">Mức: C</option>
+                                        {state.templateType === TemplateType.DINH_KY ? (
+                                          <>
+                                            <option value="T">Mức: T (Tốt)</option>
+                                            <option value="H">Mức: H (Hoàn thành)</option>
+                                            <option value="C">Mức: C (Chưa hoàn thành)</option>
+                                          </>
+                                        ) : (
+                                          <>
+                                            <option value="T">Mức: T (Tốt)</option>
+                                            <option value="Đ">Mức: Đ (Đạt)</option>
+                                            <option value="H">Mức: H (Đạt)</option>
+                                            <option value="C">Mức: C (Cần cố gắng)</option>
+                                          </>
+                                        )}
                                       </select>
                                       <div className="absolute right-1.5 top-1.5 pointer-events-none opacity-50 text-[8px]">▼</div>
                                     </div>
 
-                                    {/* Score Input */}
-                                    <div className="relative flex items-center">
-                                      <input
-                                        type="number"
-                                        value={student?.score || ''}
-                                        onChange={(e) => student && updateStudent(student.stt, 'score', e.target.value)}
-                                        placeholder="Điểm"
-                                        className="w-16 px-2 py-1 rounded-lg text-[11px] font-bold border bg-purple-50 text-purple-700 border-purple-200 uppercase tracking-wider outline-none focus:ring-2 focus:ring-purple-500/30 text-center shadow-sm"
-                                      />
-                                      <span className="absolute right-0 -mr-6 text-[10px] text-slate-400 font-medium hidden group-hover:block">đ</span>
-                                    </div>
+                                    {/* Score Input (Only for DINH_KY) */}
+                                    {state.templateType === TemplateType.DINH_KY && (
+                                      <div className="relative flex items-center">
+                                        <input
+                                          type="number"
+                                          value={student?.score || ''}
+                                          onChange={(e) => student && updateStudent(student.stt, 'score', e.target.value)}
+                                          placeholder="Điểm"
+                                          className="w-16 px-2 py-1 rounded-lg text-[11px] font-bold border bg-purple-50 text-purple-700 border-purple-200 uppercase tracking-wider outline-none focus:ring-2 focus:ring-purple-500/30 text-center shadow-sm"
+                                        />
+                                        <span className="absolute right-0 -mr-6 text-[10px] text-slate-400 font-medium hidden group-hover:block">đ</span>
+                                      </div>
+                                    )}
                                   </div>
-                                )}
                               </div>
                             </div>
                             
