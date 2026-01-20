@@ -272,155 +272,147 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-slate-50 font-sans selection:bg-pink-300/40">
+    <div className="min-h-screen relative overflow-hidden bg-[#F0F4F8] font-sans selection:bg-teal-200 selection:text-teal-900">
       
       {/* --- BACKGROUND DECORATION --- */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         {/* Abstract Blobs */}
         <div 
-          className={`absolute -top-20 -left-20 w-96 h-96 rounded-full blur-[80px] opacity-40 mix-blend-multiply animate-pulse transition-colors duration-1000 bg-${activeGrade.color}/30`}
+          className={`absolute -top-20 -left-20 w-96 h-96 rounded-full blur-[80px] opacity-30 mix-blend-multiply animate-pulse transition-colors duration-1000 bg-${activeGrade.color}/30`}
           style={{ animationDuration: '4s' }}
         />
         <div 
-          className="absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-emerald-300/30 rounded-full blur-[100px] opacity-40 mix-blend-multiply" 
+          className="absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-teal-200/40 rounded-full blur-[100px] opacity-40 mix-blend-multiply" 
         />
         <div 
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-200/20 rounded-full blur-[120px] opacity-30" 
-        />
-        <div 
-           className="absolute top-40 right-10 w-64 h-64 bg-pink-200/30 rounded-full blur-[60px] opacity-30 mix-blend-multiply"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-100/40 rounded-full blur-[90px] opacity-30" 
         />
 
         {/* Floral SVGs */}
-        <Icons.Flower className={`absolute top-20 right-12 w-48 h-48 text-${activeGrade.color}/5 rotate-12`} />
-        <Icons.Leaf className="absolute bottom-20 left-10 w-40 h-40 text-emerald-600/5 -rotate-12" />
-        <Icons.Flower className="absolute bottom-1/4 right-1/4 w-32 h-32 text-orange-400/5 rotate-45" />
+        <Icons.Flower className={`absolute top-24 right-8 w-32 h-32 text-${activeGrade.color}/10 rotate-12`} />
+        <Icons.Leaf className="absolute bottom-12 left-6 w-24 h-24 text-teal-600/10 -rotate-12" />
+        <Icons.Flower className="absolute bottom-1/4 right-1/4 w-16 h-16 text-orange-400/10 rotate-45" />
       </div>
 
       {/* --- CONTENT LAYER --- */}
       <div className="relative z-10">
         
-        {/* Header with Glassmorphism */}
-        <header className={`sticky top-0 z-50 backdrop-blur-xl bg-white/70 border-b border-white/50 shadow-sm`}>
-          <div className="max-w-7xl mx-auto px-4 h-18 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
+        {/* Header - Cleaned up */}
+        <header className="sticky top-0 z-50 bg-white/60 backdrop-blur-xl border-b border-white/40 shadow-sm">
+          <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className={`p-2.5 rounded-2xl bg-gradient-to-br from-${activeGrade.color} to-${activeGrade.color}/70 shadow-lg text-white`}>
+              <div className={`w-10 h-10 rounded-xl bg-gradient-to-br from-${activeGrade.color} to-${activeGrade.color}/70 shadow-lg text-white flex items-center justify-center`}>
                 <Icons.GraduationCap />
               </div>
               <div>
-                <h1 className="text-2xl font-bold leading-none tracking-tight text-slate-800">Trợ lý Nhận xét</h1>
-                <p className={`text-${activeGrade.color} text-xs font-bold mt-1 uppercase tracking-wide opacity-80`}>Chuẩn TT27 & CT GDPT 2018</p>
+                <h1 className="text-xl font-bold leading-none tracking-tight text-slate-800">Trợ lý Nhận xét</h1>
+                <p className={`text-${activeGrade.color} text-[10px] font-bold mt-1 uppercase tracking-wide opacity-80`}>Chuẩn TT27 & CT GDPT 2018</p>
               </div>
             </div>
             
-            <div className="flex items-center gap-4">
-              <button 
-                onClick={() => setShowApiModal(true)}
-                className="text-xs bg-slate-900/5 hover:bg-slate-900/10 backdrop-blur px-3 py-1.5 rounded-full text-slate-600 transition-colors font-bold flex items-center gap-2 border border-slate-200/50"
-              >
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                Đổi API Key
-              </button>
-              <div className="flex bg-slate-100/50 p-1.5 rounded-full backdrop-blur-md border border-white/50 shadow-inner">
-                {GRADES.map(g => (
-                  <button
-                    key={g.id}
-                    onClick={() => setState(prev => ({ ...prev, grade: g.id }))}
-                    className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
-                      state.grade === g.id 
-                      ? `bg-gradient-to-br from-${g.color} to-${g.color}/80 text-white shadow-lg shadow-${g.color}/30 scale-105 ring-2 ring-white` 
-                      : 'text-slate-400 hover:bg-white/50 hover:text-slate-600'
-                    }`}
-                  >
-                    {g.id}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <button 
+              onClick={() => setShowApiModal(true)}
+              className="text-xs bg-white hover:bg-slate-50 border border-slate-200 px-4 py-2 rounded-full text-slate-600 transition-all font-bold flex items-center gap-2 shadow-sm hover:shadow-md"
+            >
+              <div className="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></div>
+              API Key
+            </button>
           </div>
         </header>
 
         <main className="max-w-7xl mx-auto px-4 mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 pb-12">
-          {/* Left Column: Input & Config */}
+          
+          {/* Left Column: Configuration */}
           <div className="lg:col-span-5 space-y-6">
-            <section className="bg-white/80 backdrop-blur-xl p-6 rounded-[2rem] border border-white/60 shadow-xl shadow-slate-200/40 relative overflow-hidden group">
-               {/* Decorative Gradient Line */}
-               <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-${activeGrade.color}/40 via-${activeGrade.color} to-${activeGrade.color}/40`}></div>
-
-              <h2 className={`font-bold text-xl mb-6 flex items-center gap-2 text-slate-700`}>
-                 <span className={`p-2 rounded-xl bg-${activeGrade.color}/10 text-${activeGrade.color}`}>
-                  <Icons.Upload />
-                </span>
-                Cấu hình & Dữ liệu
-              </h2>
+            <section className="bg-white/80 backdrop-blur-xl p-6 rounded-3xl border border-white/60 shadow-xl shadow-slate-200/60 relative overflow-hidden">
+               {/* Grade Selector - Moved here as requested */}
+               <div className="mb-6">
+                  <label className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 block text-center">Chọn Khối Lớp</label>
+                  <div className="flex justify-center gap-2">
+                    {GRADES.map(g => (
+                      <button
+                        key={g.id}
+                        onClick={() => setState(prev => ({ ...prev, grade: g.id }))}
+                        className={`w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold transition-all duration-300 shadow-sm border-2 ${
+                          state.grade === g.id 
+                          ? `bg-${g.color} border-${g.color} text-white shadow-lg shadow-${g.color}/30 scale-110 -translate-y-1` 
+                          : `bg-white border-transparent text-slate-400 hover:bg-${g.bgLight} hover:text-${g.color}`
+                        }`}
+                        title={g.label}
+                      >
+                        {g.id}
+                      </button>
+                    ))}
+                  </div>
+               </div>
 
               <div className="space-y-6">
-                {/* Type Toggle */}
-                <div className="bg-slate-100/50 p-1.5 rounded-2xl flex border border-slate-200/60 shadow-inner">
+                
+                {/* Pill Segmented Control for Tabs */}
+                <div className="bg-slate-100/80 p-1.5 rounded-full flex relative">
                     <button
                       onClick={() => setState(prev => ({ ...prev, templateType: TemplateType.DINH_KY }))}
-                      className={`flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 ${
+                      className={`flex-1 py-2.5 rounded-full text-sm font-bold transition-all duration-300 z-10 ${
                         state.templateType === TemplateType.DINH_KY
-                          ? `bg-white text-${activeGrade.color} shadow-sm ring-1 ring-black/5`
-                          : 'text-slate-400 hover:text-slate-600'
+                          ? `bg-teal-500 text-white shadow-md`
+                          : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200/50'
                       }`}
                     >
-                      Đánh giá Môn học
+                      Môn học
                     </button>
                     <button
                       onClick={() => setState(prev => ({ ...prev, templateType: TemplateType.NLPC }))}
-                      className={`flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 ${
+                      className={`flex-1 py-2.5 rounded-full text-sm font-bold transition-all duration-300 z-10 ${
                         state.templateType === TemplateType.NLPC
-                          ? `bg-white text-${activeGrade.color} shadow-sm ring-1 ring-black/5`
-                          : 'text-slate-400 hover:text-slate-600'
+                          ? `bg-teal-500 text-white shadow-md`
+                          : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200/50'
                       }`}
                     >
                       Năng lực & Phẩm chất
                     </button>
                 </div>
 
-                {/* Period & Subject */}
+                {/* Filters */}
                 <div className="grid grid-cols-1 gap-4">
                    <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Thời điểm đánh giá</label>
+                    <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-2">Thời điểm</label>
                     <div className="relative group/select">
                       <select
                         value={state.period}
                         onChange={(e) => setState(prev => ({ ...prev, period: e.target.value as EvaluationPeriod }))}
-                        className="w-full appearance-none bg-slate-50/50 border border-slate-200/80 rounded-2xl px-5 py-3.5 text-sm font-semibold text-slate-700 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white outline-none transition-all cursor-pointer hover:border-indigo-300"
+                        className="w-full appearance-none bg-slate-50 border border-slate-200 rounded-2xl px-5 py-3.5 text-sm font-bold text-slate-700 focus:ring-2 focus:ring-teal-500/20 focus:border-teal-400 outline-none transition-all cursor-pointer"
                       >
                         {PERIODS.map(p => <option key={p} value={p}>{p.charAt(0).toUpperCase() + p.slice(1)}</option>)}
                       </select>
-                      <div className="absolute right-4 top-4 pointer-events-none text-slate-400 group-hover/select:text-indigo-500 transition-colors">▼</div>
+                      <div className="absolute right-4 top-4 pointer-events-none text-slate-400">▼</div>
                     </div>
                   </div>
 
                   {state.templateType === TemplateType.DINH_KY && (
                     <div className="space-y-1">
-                      <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">Môn học</label>
+                      <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-2">Môn học</label>
                       <div className="relative group/select">
                         <select
                           value={state.subjectName}
                           onChange={(e) => setState(prev => ({ ...prev, subjectName: e.target.value }))}
-                          className="w-full appearance-none bg-slate-50/50 border border-slate-200/80 rounded-2xl px-5 py-3.5 text-sm font-semibold text-slate-700 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:bg-white outline-none transition-all cursor-pointer hover:border-indigo-300"
+                          className="w-full appearance-none bg-slate-50 border border-slate-200 rounded-2xl px-5 py-3.5 text-sm font-bold text-slate-700 focus:ring-2 focus:ring-teal-500/20 focus:border-teal-400 outline-none transition-all cursor-pointer"
                         >
                           {activeGrade.subjects.map(s => <option key={s} value={s}>{s}</option>)}
                         </select>
-                        <div className="absolute right-4 top-4 pointer-events-none text-slate-400 group-hover/select:text-indigo-500 transition-colors">▼</div>
+                        <div className="absolute right-4 top-4 pointer-events-none text-slate-400">▼</div>
                       </div>
                     </div>
                   )}
                 </div>
 
-                {/* File Upload Area */}
-                <div className="space-y-1">
-                   <label className="text-xs font-bold text-slate-400 uppercase tracking-wider ml-1">File dữ liệu học sinh</label>
+                {/* Upload Area - Redesigned */}
+                <div className="space-y-2">
                   <div 
                     onClick={() => fileInputRef.current?.click()}
-                    className={`group/upload relative border-2 border-dashed rounded-2xl p-8 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 overflow-hidden ${
+                    className={`group/upload relative border-2 border-dashed rounded-3xl p-10 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 overflow-hidden ${
                       state.uploadedData.length > 0 
-                      ? 'border-emerald-300 bg-emerald-50/50' 
-                      : `border-slate-200 bg-slate-50/50 hover:border-${activeGrade.color}/40 hover:bg-${activeGrade.color}/5`
+                      ? 'border-teal-400 bg-teal-50/50' 
+                      : 'border-emerald-200 bg-emerald-50/30 hover:bg-emerald-50/60 hover:border-emerald-300'
                     }`}
                   >
                     <input
@@ -430,54 +422,64 @@ const App: React.FC = () => {
                       accept=".xlsx, .xls"
                       className="hidden"
                     />
+                    
+                    {/* Background Icon */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
+                       <Icons.FileSpreadsheet />
+                    </div>
+
                     {state.uploadedData.length > 0 ? (
-                      <div className="relative z-10 text-center">
-                        <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-3 mx-auto shadow-sm ring-4 ring-emerald-50">
+                      <div className="relative z-10 text-center animate-in fade-in zoom-in duration-300">
+                        <div className="w-20 h-20 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center mb-4 mx-auto shadow-md ring-8 ring-white">
                           <Icons.Check />
                         </div>
-                        <p className="text-emerald-800 font-bold text-lg">Đã nhận {state.uploadedData.length} học sinh</p>
-                        <p className="text-emerald-600 text-xs mt-1 font-medium">Click để thay đổi file khác</p>
+                        <p className="text-teal-800 font-bold text-xl">Đã tải lên</p>
+                        <p className="text-teal-600 font-bold text-3xl mt-1">{state.uploadedData.length}</p>
+                        <p className="text-teal-500/80 text-xs uppercase font-bold mt-1">Học sinh</p>
                       </div>
                     ) : (
                       <div className="relative z-10 text-center">
-                        <div className={`w-16 h-16 bg-white text-slate-400 rounded-full flex items-center justify-center mb-3 mx-auto shadow-sm border border-slate-100 group-hover/upload:scale-110 group-hover/upload:text-${activeGrade.color} transition-all duration-300`}>
-                          <Icons.FileSpreadsheet />
+                        <div className="w-20 h-20 bg-white text-emerald-400 rounded-full flex items-center justify-center mb-4 mx-auto shadow-md group-hover/upload:scale-110 group-hover/upload:rotate-3 transition-all duration-300">
+                          <Icons.CloudUpload className="w-10 h-10" />
                         </div>
-                        <p className="text-slate-600 font-bold group-hover/upload:text-slate-800 transition-colors">Tải file Excel từ CSDL</p>
-                        <p className="text-xs text-slate-400 mt-2">Cấu trúc: STT | Mã | Tên | Lớp | Ngày sinh | Mức | Điểm</p>
+                        <p className="text-slate-700 font-bold text-lg group-hover/upload:text-emerald-700 transition-colors">Tải danh sách lớp</p>
+                        <p className="text-xs text-slate-400 mt-2 font-medium">Kéo thả hoặc click để chọn file Excel</p>
                       </div>
                     )}
                   </div>
                 </div>
 
                 {state.error && (
-                  <div className="p-4 bg-red-50 border border-red-100 rounded-xl flex items-start gap-3 text-red-600 text-sm shadow-sm animate-pulse">
+                  <div className="p-4 bg-red-50 border border-red-100 rounded-2xl flex items-start gap-3 text-red-600 text-sm shadow-sm animate-pulse">
                     <Icons.Trash />
-                    <span className="font-medium">{state.error}</span>
+                    <span className="font-bold">{state.error}</span>
                   </div>
                 )}
 
-                <div className="flex gap-3 pt-2">
+                <div className="flex gap-3 pt-4">
+                  {/* Generate Button - Gradient Orange/Yellow */}
                   <button
                     onClick={handleProcess}
                     disabled={state.isProcessing || state.uploadedData.length === 0}
-                    className={`flex-1 py-4 rounded-2xl font-bold text-base flex items-center justify-center gap-2 transition-all shadow-xl shadow-${activeGrade.color}/20 active:scale-95 ${
+                    className={`flex-1 py-4 rounded-2xl font-bold text-lg text-white flex items-center justify-center gap-3 transition-all shadow-lg active:scale-95 ${
                       state.isProcessing || state.uploadedData.length === 0
-                      ? 'bg-slate-100 text-slate-400 cursor-not-allowed shadow-none'
-                      : `bg-gradient-to-r from-${activeGrade.color} to-${activeGrade.color}/80 text-white hover:shadow-${activeGrade.color}/40 hover:-translate-y-0.5`
+                      ? 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-none'
+                      : 'bg-gradient-to-r from-orange-400 to-amber-400 hover:to-orange-400 hover:shadow-orange-200 hover:-translate-y-1'
                     }`}
                   >
                     {state.isProcessing ? (
-                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                       <div className="w-6 h-6 border-3 border-white/30 border-t-white rounded-full animate-spin"></div>
                     ) : (
                       <Icons.Sparkles />
                     )}
-                    {state.isProcessing ? 'Đang phân tích...' : 'Tạo nhận xét AI'}
+                    {state.isProcessing ? 'Đang xử lý...' : 'Tạo nhận xét AI'}
                   </button>
+
+                  {/* Trash Button - Small & Subtle */}
                   <button
                     onClick={resetAll}
-                    className="px-5 border border-slate-200/80 bg-white/50 backdrop-blur rounded-2xl text-slate-400 hover:text-red-500 hover:bg-red-50 hover:border-red-100 transition-all shadow-sm active:scale-95"
-                    title="Xóa tất cả"
+                    className="w-14 h-auto flex items-center justify-center bg-white border border-slate-200 rounded-2xl text-slate-400 hover:text-red-500 hover:bg-red-50 hover:border-red-100 transition-all shadow-sm active:scale-95"
+                    title="Xóa làm lại"
                   >
                     <Icons.Trash />
                   </button>
@@ -488,35 +490,39 @@ const App: React.FC = () => {
 
           {/* Right Column: Results */}
           <div className="lg:col-span-7 space-y-6">
-            <section className="bg-white/80 backdrop-blur-xl rounded-[2rem] border border-white/60 shadow-xl shadow-slate-200/40 flex flex-col min-h-[700px] overflow-hidden relative">
-               <div className={`absolute top-0 right-0 w-full h-1 bg-gradient-to-l from-${activeGrade.color}/40 via-${activeGrade.color} to-${activeGrade.color}/40`}></div>
-
-              <div className="p-6 border-b border-slate-100/80 bg-white/40 flex items-center justify-between backdrop-blur-md">
-                <h2 className={`font-bold text-xl flex items-center gap-2 text-slate-700`}>
-                  <Icons.Check />
-                  Kết quả ({state.results.length})
+            <section className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white/60 shadow-xl shadow-slate-200/60 flex flex-col min-h-[760px] overflow-hidden relative">
+              
+              <div className="p-6 border-b border-slate-100 bg-white/50 flex items-center justify-between backdrop-blur-md z-10">
+                <h2 className="font-bold text-xl flex items-center gap-2 text-slate-700">
+                  <span className="w-8 h-8 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center">
+                    <Icons.Check />
+                  </span>
+                  Kết quả
+                  {state.results.length > 0 && <span className="bg-slate-100 text-slate-600 px-2 py-0.5 rounded-lg text-xs ml-1">{state.results.length}</span>}
                 </h2>
-                <div className="flex items-center gap-3">
-                  {state.results.length > 0 && (
-                    <button 
-                      onClick={exportExcel}
-                      className={`flex items-center gap-2 px-6 py-2.5 bg-slate-900 text-white rounded-xl text-xs font-bold hover:bg-black transition-all shadow-lg shadow-slate-900/20 active:scale-95`}
-                    >
-                      <Icons.Download />
-                      Xuất Excel
-                    </button>
-                  )}
-                </div>
+                
+                {state.results.length > 0 && (
+                  <button 
+                    onClick={exportExcel}
+                    className="flex items-center gap-2 px-5 py-2 bg-slate-800 text-white rounded-xl text-xs font-bold hover:bg-slate-900 transition-all shadow-lg shadow-slate-900/20 active:scale-95"
+                  >
+                    <Icons.Download />
+                    Xuất Excel
+                  </button>
+                )}
               </div>
 
-              <div className="flex-1 overflow-auto p-6 space-y-6 bg-slate-50/30">
+              <div className="flex-1 overflow-auto p-6 space-y-6 bg-slate-50/50 relative">
                 {state.results.length === 0 ? (
-                  <div className="h-full flex flex-col items-center justify-center text-slate-300 py-32 opacity-70">
-                    <div className={`p-10 rounded-full bg-white/50 mb-6 border border-white shadow-lg`}>
-                      <Icons.Sparkles />
+                  /* Empty State - Robot Illustration */
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300 opacity-80">
+                    <div className="bg-white p-8 rounded-full shadow-xl shadow-indigo-100 mb-6 border-4 border-white animate-bounce-slow">
+                      <Icons.Robot className="w-24 h-24 text-indigo-200" />
                     </div>
-                    <p className="text-xl font-bold text-slate-400">Chưa có kết quả</p>
-                    <p className="text-sm font-medium">Vui lòng tải file và nhấn nút tạo.</p>
+                    <h3 className="text-2xl font-bold text-slate-400 mb-2">Chưa có dữ liệu</h3>
+                    <p className="text-sm font-medium text-slate-400 max-w-xs text-center">
+                      Chọn file dữ liệu và bấm nút tạo để AI giúp bạn viết nhận xét nhé!
+                    </p>
                   </div>
                 ) : (
                   state.results.map((res, i) => {
@@ -524,16 +530,16 @@ const App: React.FC = () => {
                     const studentName = student ? student.name : `Học sinh ${res.stt}`;
                     
                     return (
-                      <div key={i} className="group relative bg-white/70 backdrop-blur-sm border border-white rounded-3xl p-1 hover:border-indigo-300 hover:shadow-xl hover:shadow-indigo-100 transition-all duration-500 hover:-translate-y-1">
-                        <div className="p-5 rounded-[1.3rem] bg-white/50">
+                      <div key={i} className="group relative bg-white/80 backdrop-blur-sm border border-white rounded-[24px] p-1 hover:border-teal-200 hover:shadow-xl hover:shadow-teal-100/50 transition-all duration-500 hover:-translate-y-1">
+                        <div className="p-5 rounded-[20px] bg-white">
                           <div className="flex items-start justify-between mb-4">
                             <div className="flex items-center gap-4">
-                              <span className={`w-10 h-10 rounded-2xl bg-slate-100 text-slate-500 flex items-center justify-center text-sm font-black shadow-inner`}>
+                              <span className="w-12 h-12 rounded-2xl bg-slate-50 text-slate-400 flex items-center justify-center text-sm font-bold shadow-inner border border-slate-100">
                                 {res.stt}
                               </span>
                               <div>
                                 <div className="flex items-center gap-2 flex-wrap">
-                                  <span className="text-base font-bold text-slate-800 block">
+                                  <span className="text-lg font-bold text-slate-800 block">
                                     {studentName}
                                   </span>
                                   <input
@@ -541,35 +547,34 @@ const App: React.FC = () => {
                                     value={student?.className || ''}
                                     onChange={(e) => student && updateStudent(student.stt, 'className', e.target.value)}
                                     placeholder="Lớp"
-                                    className="w-16 px-2 py-1 text-[10px] font-bold bg-white/80 text-slate-600 rounded-lg border border-slate-200 outline-none focus:border-indigo-300 transition-all text-center placeholder:text-slate-300 shadow-sm"
-                                    title="Nhập tên lớp"
+                                    className="w-14 px-2 py-0.5 text-[10px] font-bold bg-slate-50 text-slate-500 rounded-lg border border-transparent hover:border-slate-200 outline-none focus:border-teal-300 transition-all text-center"
                                   />
                                 </div>
                                  {/* Interactive Level and Score selectors */}
-                                 <div className="flex gap-2 mt-2">
+                                 <div className="flex gap-2 mt-1.5">
                                     {/* Level Selector */}
                                     <div className="relative">
                                       <select
                                         value={student?.level || (state.templateType === TemplateType.NLPC ? 'Đ' : 'H')}
                                         onChange={(e) => student && updateStudent(student.stt, 'level', e.target.value)}
-                                        className={`appearance-none px-3 py-1 pr-6 rounded-lg text-[11px] font-bold border uppercase tracking-wider cursor-pointer outline-none focus:ring-2 focus:ring-offset-1 transition-all shadow-sm ${getLevelColor(student?.level)}`}
+                                        className={`appearance-none pl-3 pr-7 py-1 rounded-lg text-[10px] font-bold border uppercase tracking-wider cursor-pointer outline-none focus:ring-2 focus:ring-offset-1 transition-all shadow-sm ${getLevelColor(student?.level)}`}
                                       >
                                         {state.templateType === TemplateType.DINH_KY ? (
                                           <>
                                             <option value="T">Mức: T (Tốt)</option>
                                             <option value="H">Mức: H (Hoàn thành)</option>
-                                            <option value="C">Mức: C (Chưa hoàn thành)</option>
+                                            <option value="C">Mức: C (Chưa HT)</option>
                                           </>
                                         ) : (
                                           <>
                                             <option value="T">Mức: T (Tốt)</option>
                                             <option value="Đ">Mức: Đ (Đạt)</option>
                                             <option value="H">Mức: H (Đạt)</option>
-                                            <option value="C">Mức: C (Cần cố gắng)</option>
+                                            <option value="C">Mức: C (Cần CG)</option>
                                           </>
                                         )}
                                       </select>
-                                      <div className="absolute right-1.5 top-1.5 pointer-events-none opacity-50 text-[8px]">▼</div>
+                                      <div className="absolute right-2 top-1.5 pointer-events-none opacity-40 text-[8px]">▼</div>
                                     </div>
 
                                     {/* Score Input (Only for DINH_KY) */}
@@ -579,10 +584,9 @@ const App: React.FC = () => {
                                           type="number"
                                           value={student?.score || ''}
                                           onChange={(e) => student && updateStudent(student.stt, 'score', e.target.value)}
-                                          placeholder="Điểm"
-                                          className="w-16 px-2 py-1 rounded-lg text-[11px] font-bold border bg-purple-50 text-purple-700 border-purple-200 uppercase tracking-wider outline-none focus:ring-2 focus:ring-purple-500/30 text-center shadow-sm"
+                                          placeholder="-"
+                                          className="w-10 px-1 py-1 rounded-lg text-[10px] font-bold border bg-purple-50 text-purple-700 border-purple-100 uppercase tracking-wider outline-none focus:ring-2 focus:ring-purple-200 text-center shadow-sm"
                                         />
-                                        <span className="absolute right-0 -mr-6 text-[10px] text-slate-400 font-medium hidden group-hover:block">đ</span>
                                       </div>
                                     )}
                                   </div>
@@ -596,50 +600,47 @@ const App: React.FC = () => {
                                   : `${res.nx_nang_luc_chung} ${res.nx_nang_luc_dac_thu} ${res.nx_pham_chat}`;
                                 copyToClipboard(text);
                               }}
-                              className={`px-4 py-1.5 rounded-xl bg-slate-50 text-slate-400 text-xs font-bold hover:bg-${activeGrade.color} hover:text-white transition-all shadow-sm active:scale-95`}
+                              className={`px-3 py-1.5 rounded-xl bg-slate-50 text-slate-400 text-xs font-bold hover:bg-slate-800 hover:text-white transition-all shadow-sm active:scale-95 border border-slate-100`}
                             >
                               Copy
                             </button>
                           </div>
 
                           {'noi_dung_nhan_xet' in res ? (
-                            <div className="relative">
+                            <div className="relative group/textarea">
                               <textarea
                                 value={res.noi_dung_nhan_xet}
                                 onChange={(e) => updateResult(i, 'noi_dung_nhan_xet', e.target.value)}
-                                className="w-full bg-slate-50/50 hover:bg-white focus:bg-white border border-slate-200 rounded-2xl p-4 text-sm text-slate-700 font-medium focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-400 outline-none transition-all resize-none leading-relaxed shadow-inner"
+                                className="w-full bg-slate-50/50 hover:bg-slate-50 focus:bg-white border border-transparent focus:border-teal-200 rounded-2xl p-4 text-sm text-slate-600 font-medium focus:ring-4 focus:ring-teal-500/10 outline-none transition-all resize-none leading-relaxed"
                                 rows={3}
                               />
-                              <div className="absolute bottom-2 right-2 pointer-events-none">
-                                <span className="text-[10px] text-slate-300 font-bold bg-white/80 px-1.5 py-0.5 rounded border border-slate-100">AI</span>
-                              </div>
                             </div>
                           ) : (
-                            <div className="grid gap-3">
+                            <div className="grid gap-4">
                               <div className="space-y-1">
-                                <span className="text-[9px] font-black uppercase text-slate-400 tracking-widest pl-1">NL Chung</span>
+                                <span className="text-[10px] font-bold uppercase text-slate-400 pl-2">NL Chung</span>
                                 <textarea
                                   value={res.nx_nang_luc_chung}
                                   onChange={(e) => updateResult(i, 'nx_nang_luc_chung', e.target.value)}
-                                  className="w-full bg-slate-50/50 hover:bg-white focus:bg-white border border-slate-200 rounded-xl p-3 text-sm focus:border-indigo-300 outline-none resize-none shadow-inner"
+                                  className="w-full bg-slate-50/50 hover:bg-slate-50 focus:bg-white border border-transparent focus:border-teal-200 rounded-xl p-3 text-sm font-medium text-slate-600 focus:ring-2 focus:ring-teal-500/10 outline-none resize-none"
                                   rows={2}
                                 />
                               </div>
                               <div className="space-y-1">
-                                <span className="text-[9px] font-black uppercase text-slate-400 tracking-widest pl-1">NL Đặc thù</span>
+                                <span className="text-[10px] font-bold uppercase text-slate-400 pl-2">NL Đặc thù</span>
                                 <textarea
                                   value={res.nx_nang_luc_dac_thu}
                                   onChange={(e) => updateResult(i, 'nx_nang_luc_dac_thu', e.target.value)}
-                                  className="w-full bg-slate-50/50 hover:bg-white focus:bg-white border border-slate-200 rounded-xl p-3 text-sm focus:border-indigo-300 outline-none resize-none shadow-inner"
+                                  className="w-full bg-slate-50/50 hover:bg-slate-50 focus:bg-white border border-transparent focus:border-teal-200 rounded-xl p-3 text-sm font-medium text-slate-600 focus:ring-2 focus:ring-teal-500/10 outline-none resize-none"
                                   rows={2}
                                 />
                               </div>
                               <div className="space-y-1">
-                                <span className="text-[9px] font-black uppercase text-slate-400 tracking-widest pl-1">Phẩm chất</span>
+                                <span className="text-[10px] font-bold uppercase text-slate-400 pl-2">Phẩm chất</span>
                                 <textarea
                                   value={res.nx_pham_chat}
                                   onChange={(e) => updateResult(i, 'nx_pham_chat', e.target.value)}
-                                  className="w-full bg-slate-50/50 hover:bg-white focus:bg-white border border-slate-200 rounded-xl p-3 text-sm focus:border-indigo-300 outline-none resize-none shadow-inner"
+                                  className="w-full bg-slate-50/50 hover:bg-slate-50 focus:bg-white border border-transparent focus:border-teal-200 rounded-xl p-3 text-sm font-medium text-slate-600 focus:ring-2 focus:ring-teal-500/10 outline-none resize-none"
                                   rows={2}
                                 />
                               </div>
@@ -654,45 +655,21 @@ const App: React.FC = () => {
             </section>
           </div>
         </main>
-
-        <footer className="mt-8 text-center text-slate-500/60 text-xs px-4 pb-8 backdrop-blur-sm">
-          <p className="max-w-md mx-auto leading-relaxed opacity-70 font-bold uppercase">
-            &copy; TRƯỜNG PTDTBT TH GIÀNG CHU PHÌN &copy;
-          </p>
-        </footer>
       </div>
 
       {/* API Key Modal */}
       {showApiModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md transition-all">
-          <div className="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden border border-white/50 relative">
-             <div className="absolute top-0 right-0 w-32 h-32 bg-blue-400/20 rounded-full blur-3xl -mr-10 -mt-10"></div>
-             <div className="absolute bottom-0 left-0 w-32 h-32 bg-indigo-400/20 rounded-full blur-3xl -ml-10 -mb-10"></div>
-            
+          <div className="bg-white w-full max-w-md rounded-[32px] shadow-2xl overflow-hidden border border-white/50 relative">
             <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-8 text-white text-center relative z-10">
-              <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4 backdrop-blur-md border border-white/20 shadow-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+              <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-4 backdrop-blur-md border border-white/20 shadow-lg">
+                <Icons.Sparkles />
               </div>
               <h3 className="text-2xl font-bold tracking-tight">Kết nối AI</h3>
               <p className="text-blue-100 text-sm mt-2 font-medium opacity-90">Cần có API Key từ Google AI Studio</p>
             </div>
             
             <div className="p-8 space-y-6 relative z-10">
-              <div className="space-y-4 text-sm text-slate-600">
-                <div className="flex items-start gap-3 group">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs ring-1 ring-blue-100 group-hover:bg-blue-600 group-hover:text-white transition-colors">1</span>
-                  <p>Truy cập <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" className="text-blue-600 font-bold hover:underline">Google AI Studio</a>.</p>
-                </div>
-                <div className="flex items-start gap-3 group">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs ring-1 ring-blue-100 group-hover:bg-blue-600 group-hover:text-white transition-colors">2</span>
-                  <p>Nhấn vào nút <strong>Create API Key</strong>.</p>
-                </div>
-                <div className="flex items-start gap-3 group">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs ring-1 ring-blue-100 group-hover:bg-blue-600 group-hover:text-white transition-colors">3</span>
-                  <p>Dán khóa API vào bên dưới.</p>
-                </div>
-              </div>
-
               <div className="space-y-2">
                 <label className="text-xs font-bold text-slate-500 uppercase ml-1">Khóa API của bạn</label>
                 <input 
@@ -703,13 +680,10 @@ const App: React.FC = () => {
                     if(apiError) setApiError(null);
                   }}
                   placeholder="AIzaSy..."
-                  className="w-full px-5 py-3.5 bg-slate-50/80 border border-slate-200 rounded-xl text-slate-800 font-medium focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white outline-none transition-all"
+                  className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 font-bold focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white outline-none transition-all"
                 />
                 {apiError && (
-                  <p className="text-red-500 text-xs font-medium flex items-center gap-1 bg-red-50 p-2 rounded-lg">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
-                    {apiError}
-                  </p>
+                  <p className="text-red-500 text-xs font-bold mt-2">{apiError}</p>
                 )}
               </div>
 
@@ -722,23 +696,11 @@ const App: React.FC = () => {
                   : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:shadow-blue-600/30'
                 }`}
               >
-                {isVerifyingKey ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                    Đang xác thực...
-                  </>
-                ) : (
-                  'Lưu & Bắt đầu'
-                )}
+                {isVerifyingKey ? 'Đang xác thực...' : 'Lưu & Bắt đầu'}
               </button>
               
-              {!apiKey && (
-                <p className="text-center text-[10px] text-slate-400 font-medium uppercase tracking-wide">
-                  An toàn & Bảo mật trên trình duyệt
-                </p>
-              )}
-              {apiKey && (
-                 <button onClick={() => setShowApiModal(false)} className="w-full py-2 text-slate-500 text-sm font-medium hover:text-slate-800 hover:bg-slate-50 rounded-lg transition-colors">
+               {apiKey && (
+                 <button onClick={() => setShowApiModal(false)} className="w-full py-2 text-slate-400 text-sm font-bold hover:text-slate-600 rounded-lg transition-colors">
                     Đóng
                  </button>
               )}
